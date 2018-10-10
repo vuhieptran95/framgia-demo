@@ -9,9 +9,9 @@ class HomeContent extends Component {
   }
   render() {
     return (
-      <div class="container">
+      <div className="container">
         <HomeContentHeader />
-        <div class="row text-center">
+        <div className="row text-center">
           <Item />
           <Item />
           <Item />
