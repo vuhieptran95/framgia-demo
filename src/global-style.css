@@ -1,0 +1,11 @@
+.button-no-padding {
+  padding: 0;
+}
+
+.button-no-border {
+  border: none;
+}
+
+.no-padding-right {
+  padding-right: 0;
+}
