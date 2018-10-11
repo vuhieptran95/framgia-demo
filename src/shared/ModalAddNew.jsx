@@ -1,13 +1,24 @@
 import React, { Component } from "react";
 import Modal from "./Modal";
 import Axios from "axios";
+import { cloneDeep } from "lodash";
+import DisplayMessage from "./../helper/Message";
 
 class ModalAddNew extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      srcImage: null
+      srcImage: null,
+      isProcessing: false,
+      message: null,
+      user: {}
     };
+  }
+
+  handleTextChange(event) {
+    var newuser = cloneDeep(this.state.user);
+    newuser[event.target.name] = event.target.value;
+    this.setState({ user: newuser });
   }
 
   handleFileChange(event) {
@@ -24,28 +35,38 @@ class ModalAddNew extends Component {
     }
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
+    this.setState({ isProcessing: true });
     event.preventDefault();
     var form = new FormData(document.getElementById("myForm"));
-
-    fetch("http://localhost:6001/profileImage", { method: "POST", body: form })
-      .then(console.log)
-      .catch(console.log);
-
-    Axios.post("http://localhost:6001/profileImage", form)
+    await Axios.post("http://localhost:6001/profileImage", form)
       .then(res => {
-        console.log(res.statusText);
-        console.log(res.message);
+        this.setState({
+          message: DisplayMessage(res.status, res.statusText, res.data)
+        });
         console.log(res);
       })
       .catch(err => {
-        console.log(err.response);
+        if (err.response) {
+          this.setState({
+            message: DisplayMessage(
+              err.response.status,
+              err.response.statusText,
+              err.response.data
+            )
+          });
+        }
       });
+    this.setState({ isProcessing: false });
   }
 
   render() {
     return (
-      <Modal id={this.props.id} title={this.props.title}>
+      <Modal
+        isProcessing={this.state.isProcessing}
+        id={this.props.id}
+        title={this.props.title}
+      >
         <form
           id="myForm"
           method="post"
@@ -62,6 +83,8 @@ class ModalAddNew extends Component {
                   className="form-control"
                   id="userFullName"
                   name="name"
+                  value={this.state.user.name}
+                  onChange={event => this.handleTextChange(event)}
                   placeholder="Enter your full name"
                 />
               </div>
@@ -72,6 +95,8 @@ class ModalAddNew extends Component {
                   className="form-control"
                   id="userEmail"
                   name="email"
+                  value={this.state.user.email}
+                  onChange={event => this.handleTextChange(event)}
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                 />
@@ -79,6 +104,7 @@ class ModalAddNew extends Component {
                   We'll never share your email with anyone else.
                 </small>
               </div>
+              <div className="form-group">{this.state.message}</div>
             </div>
             <div className="col-lg-5">
               <div>

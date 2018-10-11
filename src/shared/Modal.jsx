@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AddLoadingModal from "./../helper/HOC/ModalHOC";
 
 const Modal = props => (
   <div
@@ -39,4 +40,4 @@ const Modal = props => (
   </div>
 );
 
-export default Modal;
+export default AddLoadingModal("isProcessing")(Modal);
