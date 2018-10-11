@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import HomeContentHeaderModal from "./HomeContentHeaderModal";
+import Modal from "../../shared/Modal";
+import ModalAddNew from "./../../shared/ModalAddNew";
 
 const HomeContentHeader = () => (
   <div className="row">
@@ -8,12 +9,12 @@ const HomeContentHeader = () => (
       <button
         className="btn btn-success btn-block"
         data-toggle="modal"
-        data-target="#addNewModal"
+        data-target="#addnew"
       >
         <strong>Add new</strong>
       </button>
     </div>
-    <HomeContentHeaderModal />
+    <ModalAddNew id="addnew" title="Add new item" />
   </div>
 );
 

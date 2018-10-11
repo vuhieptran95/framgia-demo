@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Modal from "./Modal";
 
 const Item = () => (
   <div className="col-lg-3 col-md-6 mb-4">
@@ -16,11 +17,18 @@ const Item = () => (
         </p>
       </div>
       <div className="card-footer">
-        <a href="#" className="btn btn-primary">
+        <button
+          data-toggle="modal"
+          data-target="#item-modal"
+          className="btn btn-primary"
+        >
           Find Out More!
-        </a>
+        </button>
       </div>
     </div>
+    <Modal id="item-modal">
+      <h2>This is item modal</h2>
+    </Modal>
   </div>
 );
 
