@@ -57,7 +57,7 @@ class ModalAddNew extends Component {
           });
         }
       });
-    this.setState({ isProcessing: false });
+    this.setState({ isProcessing: false, srcImage: null });
   }
 
   render() {
@@ -76,6 +76,18 @@ class ModalAddNew extends Component {
         >
           <div className="row">
             <div className="col-lg-7">
+              <div className="form-group">
+                <label htmlFor="username">User name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  name="username"
+                  value={this.state.user.username}
+                  onChange={event => this.handleTextChange(event)}
+                  placeholder="Choose a user name"
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="userFullName">Full name</label>
                 <input
@@ -136,6 +148,7 @@ class ModalAddNew extends Component {
                 type="file"
                 onChange={event => this.handleFileChange(event)}
                 name="profileImage"
+                // value=""
               />
             </div>
           </div>

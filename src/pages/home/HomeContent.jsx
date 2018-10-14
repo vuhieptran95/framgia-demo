@@ -1,24 +1,31 @@
 import React, { Component } from "react";
-import Item from "./../../shared/Item";
 import HomeContentHeader from "./HomeContentHeader";
 import Modal from "./../../shared/Modal";
+import Db from "./../../config/FirebaseConfig";
+import { UserService } from "./../../services/UserServices";
+import HomeContentUsers from "./HomeContentUsers";
 
 class HomeContent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      users: []
+    };
   }
+
+  async componentDidMount() {
+    Db.collection("users").onSnapshot(docs => {
+      var users = [];
+      docs.forEach(doc => users.push({ username: doc.id, ...doc.data() }));
+      this.setState({ users: users });
+    });
+  }
+
   render() {
     return (
       <div className="container">
         <HomeContentHeader />
-
-        <div className="row text-center">
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-        </div>
+        <HomeContentUsers users={this.state.users} />
       </div>
     );
   }

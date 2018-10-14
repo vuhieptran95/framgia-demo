@@ -12,7 +12,6 @@ const AddLoadingModal = propname => WrappedComponent => props =>
             size={200}
             color={"#123abd"}
             loading={true}
-            clas
           />
         </div>
       </div>
