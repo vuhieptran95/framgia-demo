@@ -14,7 +14,7 @@ const HomeContentHeader = () => (
         <strong>Add new</strong>
       </button>
     </div>
-    <ModalAddNew id="addnew" title="Add new item" />
+    <ModalAddNew isAddNew={true} id="addnew" title="Add new user" />
   </div>
 );
 

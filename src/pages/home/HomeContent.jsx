@@ -14,11 +14,13 @@ class HomeContent extends Component {
   }
 
   async componentDidMount() {
-    Db.collection("users").onSnapshot(docs => {
-      var users = [];
-      docs.forEach(doc => users.push({ username: doc.id, ...doc.data() }));
-      this.setState({ users: users });
-    });
+    Db.collection("users")
+      .orderBy("dateCreated", "desc")
+      .onSnapshot(docs => {
+        var users = [];
+        docs.forEach(doc => users.push({ username: doc.id, ...doc.data() }));
+        this.setState({ users: users });
+      });
   }
 
   render() {

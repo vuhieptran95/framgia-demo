@@ -3,15 +3,18 @@ import Modal from "./Modal";
 import Axios from "axios";
 import { cloneDeep } from "lodash";
 import DisplayMessage from "./../helper/Message";
+import Db from "./../config/FirebaseConfig";
+import { AddDeletedUserModal } from "./../helper/HOC/ModalHOC";
+import $ from "jquery";
 
 class ModalAddNew extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      srcImage: null,
+      srcImage: props.user ? props.user.profileImage : null,
       isProcessing: false,
       message: null,
-      user: {}
+      user: props.user ? props.user : {}
     };
   }
 
@@ -35,11 +38,13 @@ class ModalAddNew extends Component {
     }
   }
 
-  async handleSubmit(event) {
+  async handleEdit(event) {
     this.setState({ isProcessing: true });
     event.preventDefault();
-    var form = new FormData(document.getElementById("myForm"));
-    await Axios.post("http://localhost:6001/profileImage", form)
+    var form = new FormData(
+      document.getElementById("editForm-" + this.props.user.username)
+    );
+    await Axios.put("http://localhost:6001/users", form)
       .then(res => {
         this.setState({
           message: DisplayMessage(res.status, res.statusText, res.data)
@@ -60,6 +65,47 @@ class ModalAddNew extends Component {
     this.setState({ isProcessing: false, srcImage: null });
   }
 
+  async handleAddNew(event) {
+    this.setState({ isProcessing: true });
+    event.preventDefault();
+    var form = new FormData(document.getElementById("addNew"));
+    await Axios.post("http://localhost:6001/users", form)
+      .then(res => {
+        this.setState({
+          message: DisplayMessage(res.status, res.statusText, res.data)
+        });
+        console.log(res);
+      })
+      .catch(err => {
+        if (err.response) {
+          this.setState({
+            message: DisplayMessage(
+              err.response.status,
+              err.response.statusText,
+              err.response.data
+            )
+          });
+        }
+      });
+    this.setState({ isProcessing: false, srcImage: null });
+  }
+
+  async handleDelete(event) {
+    // event.preventDefault();
+
+    if (
+      window.confirm(
+        `Do you really want to delete user ${this.props.user.username} ?`
+      )
+    ) {
+      // $("#close-modal").click();
+      // event.preventDefault();
+      Db.collection("users")
+        .doc(this.props.user.username)
+        .delete();
+    }
+  }
+
   render() {
     return (
       <Modal
@@ -68,17 +114,20 @@ class ModalAddNew extends Component {
         title={this.props.title}
       >
         <form
-          id="myForm"
-          method="post"
-          action="http://localhost:6001/profileImage"
+          id={
+            this.props.isAddNew
+              ? "addNew"
+              : "editForm-" + this.props.user.username
+          }
+          method={this.props.isAddNew ? "POST" : "PUT"}
           encType="multipart/form-data"
-          onSubmit={event => this.handleSubmit(event)}
         >
           <div className="row">
             <div className="col-lg-7">
               <div className="form-group">
                 <label htmlFor="username">User name</label>
                 <input
+                  hidden={!this.props.isAddNew}
                   type="text"
                   className="form-control"
                   id="username"
@@ -87,6 +136,7 @@ class ModalAddNew extends Component {
                   onChange={event => this.handleTextChange(event)}
                   placeholder="Choose a user name"
                 />
+                <h5 hidden={this.props.isAddNew}>{this.state.user.username}</h5>
               </div>
               <div className="form-group">
                 <label htmlFor="userFullName">Full name</label>
@@ -139,8 +189,30 @@ class ModalAddNew extends Component {
 
           <div className="row">
             <div className="col-lg-7">
-              <button type="submit" className="btn btn-primary btn-lg">
-                Submit
+              <button
+                type="submit"
+                hidden={!this.props.isAddNew}
+                onClick={event => this.handleAddNew(event)}
+                className="btn btn-primary btn-lg"
+              >
+                Add new
+              </button>
+              <button
+                type="submit"
+                hidden={this.props.isAddNew}
+                className="btn btn-primary btn-lg"
+                onClick={event => this.handleEdit(event)}
+              >
+                Save changes
+              </button>
+              <button
+                data-dismiss="modal"
+                className="btn btn-lg btn-danger margin-left-15"
+                hidden={this.props.isAddNew}
+                onClick={event => this.handleDelete(event)}
+                // onClick={() =>  confirm("wtf")}
+              >
+                Delete user
               </button>
             </div>
             <div className="col-lg-4">
@@ -152,6 +224,12 @@ class ModalAddNew extends Component {
               />
             </div>
           </div>
+          <input
+            type="text"
+            name="profileImage"
+            hidden={true}
+            defaultValue={this.state.user.profileImage}
+          />
         </form>
       </Modal>
     );

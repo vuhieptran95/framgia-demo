@@ -31,6 +31,7 @@ const Modal = props => (
             type="button"
             className="btn btn-secondary"
             data-dismiss="modal"
+            id="close-modal"
           >
             Close
           </button>
