@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Modal from "../../shared/Modal";
-import ModalAddNew from "./../../shared/ModalAddNew";
 
 const HomeContentHeader = props => (
   <div className="row">

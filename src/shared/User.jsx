@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Modal from "./Modal";
-import ModalAddNew from "./ModalAddNew";
+import ModalAddNewEdit from "./ModalAddNewEdit";
+import Authorize from "../authorization/Authorize";
 
 const User = props => (
   <div className="col-lg-3 col-md-6 mb-4">
@@ -19,18 +20,21 @@ const User = props => (
         <p className="card-text">{props.user.email}</p>
         <p className="card-text">{props.user.name}</p>
       </div>
-      <div className="card-footer">
-        <button
-          data-toggle="modal"
-          data-target={`#edit-${props.user.username}`}
-          className="btn btn-primary"
-        >
-          Click for details
-        </button>
-      </div>
+      {Authorize.hasRoleEdit(props.loginUser) && (
+        <div className="card-footer">
+          <button
+            data-toggle="modal"
+            data-target={`#edit-${props.user.username}`}
+            className="btn btn-primary"
+          >
+            Click for details
+          </button>
+        </div>
+      )}
     </div>
     <div className="text-align-left">
-      <ModalAddNew
+      <ModalAddNewEdit
+        loginUser={props.loginUser}
         isAddNew={false}
         user={props.user}
         id={`edit-${props.user.username}`}

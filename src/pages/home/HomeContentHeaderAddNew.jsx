@@ -1,7 +1,7 @@
 import React from "react";
-import ModalAddNew from "./../../shared/ModalAddNew";
+import ModalAddNewEdit from "../../shared/ModalAddNewEdit";
 
-const HomeContentHeaderAddNew = () => (
+const HomeContentHeaderAddNew = props => (
   <div className="col-lg-3">
     <button
       className="btn btn-success btn-block"
@@ -10,7 +10,12 @@ const HomeContentHeaderAddNew = () => (
     >
       <strong>Add new</strong>
     </button>
-    <ModalAddNew isAddNew={true} id="addnew" title="Add new user" />
+    <ModalAddNewEdit
+      loginUser={props.loginUser}
+      isAddNew={true}
+      id="addnew"
+      title="Add new user"
+    />
   </div>
 );
 

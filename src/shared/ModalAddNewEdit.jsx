@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import Modal from "./Modal";
 import Axios from "axios";
 import { cloneDeep } from "lodash";
-import DisplayMessage from "./../helper/Message";
-import Db from "./../config/FirebaseConfig";
+import DisplayMessage from "../helper/Message";
+import Db from "../config/FirebaseConfig";
+import Authorize from "../authorization/Authorize";
 
-class ModalAddNew extends Component {
+class ModalAddNewEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -199,14 +200,16 @@ class ModalAddNew extends Component {
               >
                 Save changes
               </button>
-              <button
-                data-dismiss="modal"
-                className="btn btn-lg btn-danger margin-left-15"
-                hidden={this.props.isAddNew}
-                onClick={event => this.handleDelete(event)}
-              >
-                Delete user
-              </button>
+              {Authorize.hasRoleDelete(this.props.loginUser) && (
+                <button
+                  data-dismiss="modal"
+                  className="btn btn-lg btn-danger margin-left-15"
+                  hidden={this.props.isAddNew}
+                  onClick={event => this.handleDelete(event)}
+                >
+                  Delete user
+                </button>
+              )}
             </div>
             <div className="col-lg-4">
               <input
@@ -228,4 +231,4 @@ class ModalAddNew extends Component {
   }
 }
 
-export default ModalAddNew;
+export default ModalAddNewEdit;

@@ -7,12 +7,14 @@ import HomeContentUsers from "./HomeContentUsers";
 import HomeContentHeaderAddNew from "./HomeContentHeaderAddNew";
 import Footer from "./../../shared/Footer";
 import Intro from "./../Intro";
+import Authorize from "./../../authorization/Authorize";
 
 class HomeContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
+      users: [],
+      loginUser: { username: "Hiep", role: ["addnew", "edit", "delete"] }
     };
   }
 
@@ -32,9 +34,14 @@ class HomeContent extends Component {
         <div className="container">
           <Intro />
           <HomeContentHeader>
-            <HomeContentHeaderAddNew />
+            {Authorize.hasRoleAddNew(this.state.loginUser) && (
+              <HomeContentHeaderAddNew loginUser={this.state.loginUser} />
+            )}
           </HomeContentHeader>
-          <HomeContentUsers users={this.state.users} />
+          <HomeContentUsers
+            loginUser={this.state.loginUser}
+            users={this.state.users}
+          />
         </div>
         <Footer />
       </div>
