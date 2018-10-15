@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import * as firebase from "firebase";
 import AccountSignUpLogin from "./AccountSignUpLogin";
 import { Authen } from "./../../config/FirebaseConfig";
 import AccountProfile from "./AccountProfile";

@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-// import * as firebase from "firebase";
 import { DisplayError } from "./../../helper/Message";
 import Db, { Authen } from "./../../config/FirebaseConfig";
 import Functions from "../../authorization/Functions";
-import AddLoadingAccount from "./../../helper/HOC/AccountHOC";
-import ClipLoading from "./../../shared/ClipLoading";
 import AccountWrap from "./AccountWrap";
 
 class AccountSignUpLogin extends Component {
@@ -129,4 +126,4 @@ class AccountSignUpLogin extends Component {
   }
 }
 
-export default AddLoadingAccount("loginUser")(AccountSignUpLogin);
+export default AccountSignUpLogin;

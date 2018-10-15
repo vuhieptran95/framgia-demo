@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./css/AccountPermissionForm.css";
 import Functions from "../../authorization/Functions";
 import Db from "../../config/FirebaseConfig";
-import ClipLoading from "./../../shared/ClipLoading";
 import AccountWrap from "./AccountWrap";
 
 class AccountPermissionForm extends Component {
