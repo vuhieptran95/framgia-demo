@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { ClipLoader } from "react-spinners";
-import Modal from "../../shared/Modal";
 import ClipLoading from "../../shared/ClipLoading";
 
 const AddLoading = propname => WrappedComponent => props =>
@@ -9,7 +7,7 @@ const AddLoading = propname => WrappedComponent => props =>
       <ClipLoading size={200} />
     </WrappedComponent>
   ) : (
-    <WrappedComponent {...props} />
+    <WrappedComponent {...props}>{props.children}</WrappedComponent>
   );
 
 export default AddLoading;
