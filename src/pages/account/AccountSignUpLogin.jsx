@@ -3,13 +3,17 @@ import React, { Component } from "react";
 import { DisplayError } from "./../../helper/Message";
 import Db, { Authen } from "./../../config/FirebaseConfig";
 import Functions from "../../authorization/Functions";
+import AddLoadingAccount from "./../../helper/HOC/AccountHOC";
+import ClipLoading from "./../../shared/ClipLoading";
+import AccountWrap from "./AccountWrap";
 
 class AccountSignUpLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isSignUp: false,
-      error: ""
+      error: "",
+      isProcessing: false
     };
   }
 
@@ -25,6 +29,7 @@ class AccountSignUpLogin extends Component {
   }
 
   async handleSignUp(event) {
+    this.setState({ isProcessing: !this.state.isProcessing });
     event.preventDefault();
     var result = null;
     try {
@@ -37,7 +42,7 @@ class AccountSignUpLogin extends Component {
       this.setState({ error: DisplayError(error) });
     }
     if (result) {
-      Db.collection("authen-users")
+      await Db.collection("authen-users")
         .doc(result.user.uid)
         .set({
           role: [Functions.VIEW_USER_DETAILS],
@@ -45,9 +50,11 @@ class AccountSignUpLogin extends Component {
           dateCreated: Date.now()
         });
     }
+    this.setState({ isProcessing: !this.state.isProcessing });
   }
 
   async handleLogIn(event) {
+    this.setState({ isProcessing: !this.state.isProcessing });
     event.preventDefault();
     var result = null;
     try {
@@ -60,63 +67,66 @@ class AccountSignUpLogin extends Component {
       console.log(error);
       this.setState({ error: DisplayError(error) });
     }
+    this.setState({ isProcessing: !this.state.isProcessing });
   }
 
   render() {
     return (
-      <div>
-        <h3>{this.state.isSignUp ? "Sign up form" : "Log in form"}</h3>
-        <form
-          onSubmit={
-            this.state.isSignUp
-              ? event => this.handleSignUp(event)
-              : event => this.handleLogIn(event)
-          }
-        >
-          <div className="form-group">
-            <label htmlFor="email">Email address</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-              value={this.state.email}
-              onChange={event => this.handleTextChange(event)}
-              required
-            />
-            <small id="emailHelp" className="form-text text-muted">
-              We'll never share your email with anyone else.
-            </small>
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              //   type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={event => this.handleTextChange(event)}
-              required
-            />
-          </div>
-          <div className="form-group">{this.state.error}</div>
-          <button type="submit" className="btn btn-primary">
-            {this.state.isSignUp ? "Sign up" : "Log in"}
-          </button>
-          <button
-            onClick={event => this.handleSwitch(event)}
-            className="btn btn-default margin-left-15"
+      <AccountWrap isProcessing={this.state.isProcessing}>
+        <div>
+          <h3>{this.state.isSignUp ? "Sign up form" : "Log in form"}</h3>
+          <form
+            onSubmit={
+              this.state.isSignUp
+                ? event => this.handleSignUp(event)
+                : event => this.handleLogIn(event)
+            }
           >
-            Switch to {!this.state.isSignUp ? <u>Sign up</u> : <u>Log in</u>}
-          </button>
-        </form>
-      </div>
+            <div className="form-group">
+              <label htmlFor="email">Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+                value={this.state.email}
+                onChange={event => this.handleTextChange(event)}
+                required
+              />
+              <small id="emailHelp" className="form-text text-muted">
+                We'll never share your email with anyone else.
+              </small>
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                //   type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={event => this.handleTextChange(event)}
+                required
+              />
+            </div>
+            <div className="form-group">{this.state.error}</div>
+            <button type="submit" className="btn btn-primary">
+              {this.state.isSignUp ? "Sign up" : "Log in"}
+            </button>
+            <button
+              onClick={event => this.handleSwitch(event)}
+              className="btn btn-default margin-left-15"
+            >
+              Switch to {!this.state.isSignUp ? <u>Sign up</u> : <u>Log in</u>}
+            </button>
+          </form>
+        </div>
+      </AccountWrap>
     );
   }
 }
 
-export default AccountSignUpLogin;
+export default AddLoadingAccount("loginUser")(AccountSignUpLogin);

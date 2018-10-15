@@ -25,7 +25,7 @@ class Account extends Component {
     return (
       <div className="container">
         {this.state.loginUser == null ? (
-          <AccountSignUpLogin />
+          <AccountSignUpLogin loginUser={this.state.loginUser} />
         ) : (
           <AccountProfile
             handleLogOut={() => this.handleLogOut()}
