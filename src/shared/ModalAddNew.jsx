@@ -4,8 +4,6 @@ import Axios from "axios";
 import { cloneDeep } from "lodash";
 import DisplayMessage from "./../helper/Message";
 import Db from "./../config/FirebaseConfig";
-import { AddDeletedUserModal } from "./../helper/HOC/ModalHOC";
-import $ from "jquery";
 
 class ModalAddNew extends Component {
   constructor(props) {
@@ -91,15 +89,11 @@ class ModalAddNew extends Component {
   }
 
   async handleDelete(event) {
-    // event.preventDefault();
-
     if (
       window.confirm(
         `Do you really want to delete user ${this.props.user.username} ?`
       )
     ) {
-      // $("#close-modal").click();
-      // event.preventDefault();
       Db.collection("users")
         .doc(this.props.user.username)
         .delete();
@@ -210,7 +204,6 @@ class ModalAddNew extends Component {
                 className="btn btn-lg btn-danger margin-left-15"
                 hidden={this.props.isAddNew}
                 onClick={event => this.handleDelete(event)}
-                // onClick={() =>  confirm("wtf")}
               >
                 Delete user
               </button>
@@ -220,7 +213,6 @@ class ModalAddNew extends Component {
                 type="file"
                 onChange={event => this.handleFileChange(event)}
                 name="profileImage"
-                // value=""
               />
             </div>
           </div>

@@ -4,6 +4,9 @@ import Modal from "./../../shared/Modal";
 import Db from "./../../config/FirebaseConfig";
 import { UserService } from "./../../services/UserServices";
 import HomeContentUsers from "./HomeContentUsers";
+import HomeContentHeaderAddNew from "./HomeContentHeaderAddNew";
+import Footer from "./../../shared/Footer";
+import Intro from "./../Intro";
 
 class HomeContent extends Component {
   constructor(props) {
@@ -25,9 +28,15 @@ class HomeContent extends Component {
 
   render() {
     return (
-      <div className="container">
-        <HomeContentHeader />
-        <HomeContentUsers users={this.state.users} />
+      <div>
+        <div className="container">
+          <Intro />
+          <HomeContentHeader>
+            <HomeContentHeaderAddNew />
+          </HomeContentHeader>
+          <HomeContentUsers users={this.state.users} />
+        </div>
+        <Footer />
       </div>
     );
   }

@@ -7,7 +7,7 @@ class Intro extends Component {
   }
   render() {
     return (
-      <div className="container">
+      <div className="">
         <header className="jumbotron my-4">
           <h1 className="display-3">A Warm Welcome!</h1>
           <p className="lead">
