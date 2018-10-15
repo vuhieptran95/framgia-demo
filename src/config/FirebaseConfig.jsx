@@ -15,4 +15,6 @@ const settings = { timestampsInSnapshots: true };
 const Db = firebase.firestore();
 Db.settings(settings);
 
+export const Authen = firebase.auth();
+
 export default Db;

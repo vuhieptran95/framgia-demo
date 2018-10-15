@@ -5,7 +5,7 @@ const Nav = props => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div className="container">
       <a className="navbar-brand" href="#">
-        Start Bootstrap
+        Framgia Demo
       </a>
       <button
         className="navbar-toggler"
@@ -26,11 +26,11 @@ const Nav = props => (
             </NavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              About
-            </a>
+            <NavLink to="/account" className="nav-link">
+              Account
+            </NavLink>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a className="nav-link" href="#">
               Services
             </a>
@@ -39,7 +39,7 @@ const Nav = props => (
             <a className="nav-link" href="#">
               Contact
             </a>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

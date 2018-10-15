@@ -20,7 +20,7 @@ const User = props => (
         <p className="card-text">{props.user.email}</p>
         <p className="card-text">{props.user.name}</p>
       </div>
-      {Authorize.hasRoleEdit(props.loginUser) && (
+      {Authorize.hasRoleViewUserDetails(props.loginUser) && (
         <div className="card-footer">
           <button
             data-toggle="modal"

@@ -192,14 +192,16 @@ class ModalAddNewEdit extends Component {
               >
                 Add new
               </button>
-              <button
-                type="submit"
-                hidden={this.props.isAddNew}
-                className="btn btn-primary btn-lg"
-                onClick={event => this.handleEdit(event)}
-              >
-                Save changes
-              </button>
+              {Authorize.hasRoleEdit(this.props.loginUser) && (
+                <button
+                  type="submit"
+                  hidden={this.props.isAddNew}
+                  className="btn btn-primary btn-lg"
+                  onClick={event => this.handleEdit(event)}
+                >
+                  Save changes
+                </button>
+              )}
               {Authorize.hasRoleDelete(this.props.loginUser) && (
                 <button
                   data-dismiss="modal"
