@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Authen } from "./../../config/FirebaseConfig";
 
 const AccountProfile = props => (
   <div>
