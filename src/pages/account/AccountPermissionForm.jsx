@@ -9,7 +9,8 @@ class AccountPermissionForm extends Component {
     super(props);
     this.state = {
       role: props.loginUser.role,
-      isProcessing: false
+      isProcessing: false,
+      permissionMessage: ""
     };
   }
 
@@ -42,7 +43,11 @@ class AccountPermissionForm extends Component {
     this.setState({ isProcessing: !this.state.isProcessing });
     await Db.collection("authen-users")
       .doc(this.props.loginUser.id)
-      .update({ role: this.state.role });
+      .update({ role: this.state.role })
+      .then(() => this.setState({ permissionMessage: "Permission Updated!" }))
+      .catch(err =>
+        this.setState({ permissionMessage: "Update permissions failed!" + err })
+      );
     this.setState({ isProcessing: !this.state.isProcessing });
   }
 
@@ -51,6 +56,7 @@ class AccountPermissionForm extends Component {
       <AccountWrap isProcessing={this.state.isProcessing}>
         <div>
           <div className="margin-top-30">
+            <h5>{this.state.permissionMessage}</h5>
             <label className="customcheck">
               View User Details
               <input

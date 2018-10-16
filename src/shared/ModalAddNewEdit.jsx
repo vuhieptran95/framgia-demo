@@ -114,13 +114,20 @@ class ModalAddNewEdit extends Component {
               ? "addNew"
               : "editForm-" + this.props.user.username
           }
+          class="needs-validation"
+          novalidate
           method={this.props.isAddNew ? "POST" : "PUT"}
           encType="multipart/form-data"
+          onSubmit={
+            this.state.isAddNew
+              ? event => this.handleAddNew(event)
+              : event => this.handleEdit(event)
+          }
         >
           <div className="row">
             <div className="col-lg-7">
               <div className="form-group">
-                <label htmlFor="username">User name</label>
+                <label htmlFor="username">User name (*)</label>
                 <input
                   hidden={!this.props.isAddNew}
                   type="text"
@@ -130,7 +137,20 @@ class ModalAddNewEdit extends Component {
                   value={this.state.user.username}
                   onChange={event => this.handleTextChange(event)}
                   placeholder="Choose a user name"
+                  aria-describedby="usernameHelp"
+                  required
+                  pattern="[0-9a-zA-Z]{6,}"
+                  title="At least 6 characters. Only allow letters and numbers"
                 />
+                <small
+                  hidden={this.props.isAddNew ? false : true}
+                  id="usernameHelp"
+                  className="form-text text-muted"
+                >
+                  Username requires at least 6 characters. Only allow letters
+                  and numbers
+                </small>
+                <div class="invalid-feedback">Please choose a username.</div>
                 <h5 hidden={this.props.isAddNew}>{this.state.user.username}</h5>
               </div>
               <div className="form-group">
@@ -146,7 +166,7 @@ class ModalAddNewEdit extends Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="userEmail">Email address</label>
+                <label htmlFor="userEmail">Email address (*)</label>
                 <input
                   type="email"
                   className="form-control"
@@ -156,6 +176,7 @@ class ModalAddNewEdit extends Component {
                   onChange={event => this.handleTextChange(event)}
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
+                  required
                 />
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else.
@@ -187,7 +208,6 @@ class ModalAddNewEdit extends Component {
               <button
                 type="submit"
                 hidden={!this.props.isAddNew}
-                onClick={event => this.handleAddNew(event)}
                 className="btn btn-primary btn-lg"
               >
                 Add new
@@ -197,7 +217,6 @@ class ModalAddNewEdit extends Component {
                   type="submit"
                   hidden={this.props.isAddNew}
                   className="btn btn-primary btn-lg"
-                  onClick={event => this.handleEdit(event)}
                 >
                   Save changes
                 </button>
@@ -207,7 +226,7 @@ class ModalAddNewEdit extends Component {
                   data-dismiss="modal"
                   className="btn btn-lg btn-danger margin-left-15"
                   hidden={this.props.isAddNew}
-                  onClick={event => this.handleDelete(event)}
+                  onClick={() => this.handleDelete()}
                 >
                   Delete user
                 </button>
