@@ -1,6 +1,6 @@
 Đây là project demo để apply vị trí thực tập/part time ReactJS tại Framgia:
  
- -Link hoàn thiện: http://framgia-demo.site/
+ -Link hoàn thiện: http://framgia-demo.site/ - Sử dụng Chrome vì demo sử dụng format ảnh là .webp
  
  -Thời gian làm: 7 ngày
  
