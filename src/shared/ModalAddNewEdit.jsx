@@ -43,7 +43,7 @@ class ModalAddNewEdit extends Component {
     var form = new FormData(
       document.getElementById("editForm-" + this.props.user.username)
     );
-    await Axios.put("http://localhost:6001/users", form)
+    await Axios.put("http://framgia-demo.site:6001/users", form)
       .then(res => {
         this.setState({
           message: DisplayMessage(res.status, res.statusText, res.data)
@@ -68,7 +68,7 @@ class ModalAddNewEdit extends Component {
     this.setState({ isProcessing: true });
     event.preventDefault();
     var form = new FormData(document.getElementById("addNew"));
-    await Axios.post("http://localhost:6001/users", form)
+    await Axios.post("http://framgia-demo.site:6001/users", form)
       .then(res => {
         this.setState({
           message: DisplayMessage(res.status, res.statusText, res.data)
