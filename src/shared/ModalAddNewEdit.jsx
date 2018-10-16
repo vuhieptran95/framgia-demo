@@ -107,6 +107,8 @@ class ModalAddNewEdit extends Component {
         isProcessing={this.state.isProcessing}
         id={this.props.id}
         title={this.props.title}
+        isAddNew={this.props.isAddNew}
+        {...this.props}
       >
         <form
           id={
@@ -114,12 +116,10 @@ class ModalAddNewEdit extends Component {
               ? "addNew"
               : "editForm-" + this.props.user.username
           }
-          class="needs-validation"
-          novalidate
           method={this.props.isAddNew ? "POST" : "PUT"}
           encType="multipart/form-data"
           onSubmit={
-            this.state.isAddNew
+            this.props.isAddNew
               ? event => this.handleAddNew(event)
               : event => this.handleEdit(event)
           }
