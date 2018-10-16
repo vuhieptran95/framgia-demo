@@ -12,6 +12,7 @@ class Intro extends Component {
           <h1 className="display-3">
             Demo project apply thực tập/part time ReactJS tại Framgia
           </h1>
+          <h5>Thời gian làm: 7 ngày</h5>
           <h5>
             <a href="https://github.com/vuhieptran95/framgia-demo">
               Source code client
@@ -33,7 +34,15 @@ class Intro extends Component {
               </i>
             </strong>
           </p>
-          <a href="#" className="btn btn-primary btn-lg">
+          <p className="lead">
+            <strong>
+              <i>** Xem video demo tốc độ 1.25 - 1.5</i>
+            </strong>
+          </p>
+          <a
+            href={`https://www.youtube.com/watch?v=nUMC1e6XYPE&feature=youtu.be`}
+            className="btn btn-primary btn-lg"
+          >
             Link video trình bày demo
           </a>
         </header>
