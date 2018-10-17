@@ -1,1 +1,1 @@
-export const SERVER = "https://6001-dot-4604456-dot-devshell.appspot.com/";
+export const SERVER = "http://localhost:6001/";
