@@ -44,7 +44,7 @@ class ModalAddNewEdit extends Component {
     var form = new FormData(
       document.getElementById("editForm-" + this.props.user.username)
     );
-    await Axios.put(`${SERVER}test`, form)
+    await Axios.put(`${SERVER}users`, form)
       .then(res => {
         this.setState({
           message: DisplayMessage(res.status, res.statusText, res.data)
