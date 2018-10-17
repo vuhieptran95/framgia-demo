@@ -1,1 +1,1 @@
-export const SERVER = "framgia-demo.site";
+export const SERVER = "localhost";
