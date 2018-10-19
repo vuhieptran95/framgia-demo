@@ -1,1 +1,1 @@
-export const SERVER = "http://localhost:6001/";
+export const SERVER = "https://server-dot-my-static-website-219705.appspot.com/";
